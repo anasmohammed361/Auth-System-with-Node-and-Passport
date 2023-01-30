@@ -1,7 +1,7 @@
 import passport,{} from 'passport'
-import passportJWT,{ExtractJwt,Strategy} from 'passport-jwt'
+import {ExtractJwt,Strategy} from 'passport-jwt'
 import {user} from '../models/User.mjs'
-import {jwtSecret,jwtSession} from '../config.mjs'
+import {jwtSecret,jwtSession} from '../configs/config.mjs'
 
 const params = {
     secretOrKey : jwtSecret,

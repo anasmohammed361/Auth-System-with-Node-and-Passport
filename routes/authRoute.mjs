@@ -1,12 +1,12 @@
 import {user} from '../models/User.mjs'
-import {jwtSecret} from '../config.mjs'
+import {jwtSecret} from '../configs/config.mjs'
 import {Router} from 'express'
 import passport from 'passport'
 import jwtSimple from 'jwt-simple'
 
-export const router = Router()
+export const authRouter = Router()
 
-router.post("/login",passport.authenticate("local"),
+authRouter.post("/login",passport.authenticate("local"),
 async (req,res)=>{
 console.log("Passed the auth so logged in");
 try {
@@ -19,16 +19,16 @@ try {
         expire : Date.now() +1000 * 60 * 60 * 24 * 1
     }
     const token = jwtSimple.encode(payload,jwtSecret)
-    res.json({
-        token:token,
-    })
+    console.log("Console Before cookie");
+    res.cookie('jwt',token,{httpOnly:true})
+    res.send("Cookie was send")
+    console.log("Console after cookie");
 } catch (error) {
     console.log("Error occured at /login \n",error);
 }
 })
 
-router.post("/signup",async(req,res)=>{
-   
+authRouter.post("/signup",async(req,res)=>{
     user.register(
         new user({username:req.body.username}),
         req.body.password,

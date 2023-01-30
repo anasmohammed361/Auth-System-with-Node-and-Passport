@@ -8,4 +8,3 @@ const userSchema = new Schema({
 })
 userSchema.plugin(passportLocalMongoose)
 export const user =  model('auth',userSchema)
-

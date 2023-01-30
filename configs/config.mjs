@@ -1,4 +1,4 @@
-export const jwtSecret = "cybernaut";
+export const jwtSecret = "Cybernaut";
 export const jwtSession = {
     session: false
 };
