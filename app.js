@@ -65,7 +65,7 @@ passport.use(
     callbackURL:'http://localhost:3000/auth/google/callback',
     userProfileURL:'https://www.googleapis.com/oauth2/v3/userinfo'
   },(accessToken, refreshToken, profile, cb) =>{
-    console.log(profile);
+    // console.log(profile);
     user.findOrCreate({ googleId: profile.id }, function (err, user) {
       return cb(err, user);
     });
@@ -97,7 +97,7 @@ app.get("/",(req,res)=>{
 
 app.get("/home",(req,res)=>{
  if(req.isAuthenticated())
-    res.send("<h1 style='text-align:center'>Whoo Hoo , User is Logged In</h1>")
+   res.redirect("https://www.cybernautofficial.com/")
   else res.redirect("/login")
 })
 
