@@ -57,7 +57,7 @@ passport.use(
   new GoogleStrategy({
     clientID:process.env.CLIENT_ID,
     clientSecret:process.env.CLIENT_SECRET,
-    callbackURL:'http://localhost:3000/auth/google',
+    callbackURL:'http://localhost:3000/auth/google/callback',
     userProfileURL:'https://www.googleapis.com/oauth2/v3/userinfo'
   },(accessToken, refreshToken, profile, cb) =>{
     user.findOrCreate({ googleId: profile.id }, function (err, user) {
@@ -97,7 +97,7 @@ app.get("/login",(req,res)=>{
 app.get('/auth/google',
   passport.authenticate('google', { scope: ['profile'] }));
 
-app.get('/auth/google/callback', 
+app.get('/auth/google/callback',
   passport.authenticate('google', { failureRedirect: '/login' }),
   (req, res)  => {
     // Successful authentication, redirect home.
