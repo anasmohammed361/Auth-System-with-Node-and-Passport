@@ -14,6 +14,11 @@ import findOrCreate from 'mongoose-findorcreate'
 import {authRouter} from './routes/authRoute.mjs'
 import {Strategy as GoogleStrategy} from 'passport-google-oauth20'
 //Env
+import { fileURLToPath } from 'url';
+import { dirname } from 'path';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
 config()
 
 const uri = process.env.DATABASE_URI
@@ -60,6 +65,7 @@ passport.use(
     callbackURL:'http://localhost:3000/auth/google/callback',
     userProfileURL:'https://www.googleapis.com/oauth2/v3/userinfo'
   },(accessToken, refreshToken, profile, cb) =>{
+    console.log(profile);
     user.findOrCreate({ googleId: profile.id }, function (err, user) {
       return cb(err, user);
     });
@@ -81,6 +87,14 @@ passport.use(
 //Setting up Routes
 app.use(authRouter)
 
+app.get("/",(req,res)=>{
+  if(req.isAuthenticated()){
+    res.redirect("/home")
+  }else{
+    res.redirect("/signup")
+  }
+})
+
 app.get("/home",(req,res)=>{
  if(req.isAuthenticated())
     res.send("<h1 style='text-align:center'>Whoo Hoo , User is Logged In</h1>")
@@ -88,10 +102,10 @@ app.get("/home",(req,res)=>{
 })
 
 app.get("/signup",(req,res)=>{
-    res.sendFile('/home/anasmohammed361/vs/Js/Cybernaut/src/signup.html')
+    res.sendFile('src/signup.html',{ root: __dirname })
 })
 app.get("/login",(req,res)=>{
-    res.sendFile('/home/anasmohammed361/vs/Js/Cybernaut/src/login.htm')
+    res.sendFile('src/login.htm',{ root: __dirname })
 })
 
 app.get('/auth/google',
@@ -101,7 +115,7 @@ app.get('/auth/google/callback',
   passport.authenticate('google', { failureRedirect: '/login' }),
   (req, res)  => {
     // Successful authentication, redirect home.
-    res.redirect('/');
+    res.redirect('/home');
   });
 
 app.listen("3000" , ()=> console.log("Server running at port 3000"))

@@ -2,7 +2,7 @@ import { Schema, model } from 'mongoose'
 import findOrCreatePlugin from 'mongoose-findorcreate'
 import passportLocalMongoose from 'passport-local-mongoose'
 const userSchema = new Schema({
-    username: { type : String , unique : true, required : true },
+    username: String,
     password:String,
     googleId:String
 },{
