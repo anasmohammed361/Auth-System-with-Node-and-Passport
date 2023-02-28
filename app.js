@@ -97,7 +97,7 @@ app.get("/",(req,res)=>{
 
 app.get("/home",(req,res)=>{
  if(req.isAuthenticated())
-   res.redirect("https://www.cybernautofficial.com/")
+   res.sendFile('src/home.html',{root:__dirname})
   else res.redirect("/login")
 })
 
