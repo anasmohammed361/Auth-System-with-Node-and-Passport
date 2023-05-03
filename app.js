@@ -72,11 +72,6 @@ passport.use(
   })
 )
 
-
-
-
-
-
 // app.use((req, res, next) => {
 //     const jwt = req.cookies.jwt;
 //     if (jwt) {
