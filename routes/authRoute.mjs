@@ -1,29 +1,8 @@
 import {user} from '../models/User.mjs'
-// import {jwtS ecret} from '../configs/config.mjs'
 import {Router} from 'express'
 import passport  from 'passport'
 
 export const authRouter = Router()
-
-// authRouter.post("/login",passport.authenticate("local"),
-// async (req,res)=>{
-// console.log("Passed the auth so logged in");
-// try {
-//     const userData = await user.findOne({
-//         username:req.body.username
-//     })
-//     const payload = {
-//         id:userData.id,
-//         // mills * sec * min * hours * days 
-//         expire : Date.now() +1000 * 60 * 60 * 24 * 1
-//     }
-//     const token = jwtSimple.encode(payload,jwtSecret)
-//     res.cookie('jwt',token,{httpOnly:true})
-//     res.send("Cookie was send")
-// } catch (error) {
-//     console.log("Error occured at /login",error);
-// }
-// })
 
 authRouter.post("/login",
  (req,res)=>{
@@ -67,5 +46,3 @@ authRouter.get("/signout",(req,res)=>{
    res.redirect("/login")
 })
 
-
-// export {router}

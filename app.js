@@ -65,20 +65,11 @@ passport.use(
     callbackURL:'http://localhost:3000/auth/google/callback',
     userProfileURL:'https://www.googleapis.com/oauth2/v3/userinfo'
   },(accessToken, refreshToken, profile, cb) =>{
-    // console.log(profile);
     user.findOrCreate({ googleId: profile.id }, function (err, user) {
       return cb(err, user);
     });
   })
 )
-
-// app.use((req, res, next) => {
-//     const jwt = req.cookies.jwt;
-//     if (jwt) {
-//       req.headers.authorization = `Bearer ${jwt}`;
-//     }
-//     next();
-//   });
 //Setting up Routes
 app.use(authRouter)
 
